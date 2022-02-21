@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+
+    <script src="https://cdn.staticfile.org/react/16.8.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.8.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      // 1.创建类式组件
+      class Life extends React.Component {
+        state = {
+          opacity: 1,
+        }
+
+        death = () => {
+          const { opacity } = this.state
+          opacity === this.state.opacity ? 1 : 0
+          this.setState({ opacity })
+        }
+
+        render() {
+          return (
+            <div>
+              <h1 style={{ opacity: this.state.opacity }}>学不会怎么办</h1>
+              <button onClick={this.death}>不活了</button>
+            </div>
+          )
+        }
+      }
+
+      // 2.渲染到页面
+      ReactDOM.render(<Life />, document.getElementById("test"))
+    </script>
+  </body>
+</html>

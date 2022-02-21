@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>AJAX</title>
+	<style>
+		.container {
+			margin: 200px auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.btn {
+			width: 100px;
+			line-height: 30px;
+			background-color: #10a8fa;
+			color: #fff;
+			text-align: center;
+			border-radius: 4px;
+			font-size: 12px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		AJAX简单封装-promise
+		<div class="btn" id="btn">send request</div>
+	</div>
+
+	<script>
+		const btn = document.getElementById("btn")
+
+		btn.onclick = () => {
+			this.sendAjax('https://api.apiopen.top/getJoke', 'GET').then(resolve => {
+				const res = JSON.parse(resolve)
+				console.log('success', res);
+			}, reject => {
+				console.log('error', reject);
+			})
+		}
+
+		function sendAjax(url, type) {
+			return new Promise((resolve, reject) => {
+				const xhr = new XMLHttpRequest()
+				xhr.open(type, url)
+				xhr.send()
+				xhr.onreadystatechange = () => {
+					if (xhr.readyState === 4) {
+						if (xhr.status >= 200 && xhr.status < 300) resolve(xhr.response)
+						reject(xhr.status)
+					}
+				}
+			})
+		}
+	</script>
+</body>
+
+</html>

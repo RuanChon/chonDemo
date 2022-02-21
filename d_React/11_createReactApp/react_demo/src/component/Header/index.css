@@ -1,0 +1,11 @@
+.todo-header input {
+  width: 560px;
+  height: 28px;
+  font-size: 14px;
+  padding: 4px 7px;
+}
+
+.todo-header input:focus {
+  outline: none;
+  border-color: aquamarine;
+}

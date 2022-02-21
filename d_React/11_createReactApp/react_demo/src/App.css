@@ -1,0 +1,41 @@
+/* base */
+body {
+  background-color: #fff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #da4f49;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bd362f;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.todo-container {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.todo-container .todo-wrap {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border: 1px solid #ddd;
+}
+
+/* base end */

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      crossorigin="anonymous"
+      src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"
+    ></script>
+    <title>set header</title>
+    <style>
+      #result {
+        border: 1px solid #323323;
+        width: 220px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button>发get请求</button>
+    <button>发post送请求</button>
+    <button>发ajax送请求</button>
+    <div id="result"></div>
+
+    <script>
+      const btns = document.querySelectorAll("button")
+      const resBox = document.getElementById("result")
+
+      // get
+      btns[0].onclick = () => {
+        axios
+          .get("http://127.0.0.1:8800/axios-server", {
+            // 设置请求参数
+            params: {
+              name: "chon",
+              age: 23,
+            },
+            // 设置请求头
+            headers: {
+              axios_header: "test",
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            resBox.innerHTML = res.data
+          })
+      }
+
+      // post
+      btns[1].onclick = () => {
+        axios
+          .post(
+            "http://127.0.0.1:8800/axios-server",
+            {
+              // 设置请求体的请求参数
+              name: "rc",
+              age: 23,
+            },
+            {
+              // 设置url的请求参数
+              params: {
+                name: "chon",
+                age: 23,
+              },
+              // 设置请求头
+              headers: {
+                axios_header: "test",
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res)
+            resBox.innerHTML = res.data
+          })
+      }
+
+      // ajax
+      btns[2].onclick = () => {
+        axios({
+          method: "POST",
+          url: "http://127.0.0.1:8800/axios-server",
+          data: {
+            username: "chon",
+            password: "chon",
+          },
+          params: {
+            age: "12",
+          },
+          headers: {
+            axios_content: "test",
+          },
+        }).then((res) => {
+          console.log(res)
+          resBox.innerHTML = res.data
+        })
+      }
+    </script>
+  </body>
+</html>

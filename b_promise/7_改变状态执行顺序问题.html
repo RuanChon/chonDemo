@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let p = new Promise((reslove, reject) => {
+        // 当 promise 初始 pending 状态被改变时，则会调用指定回调
+        // 当这里是同步任务时，则限制执行状态变更
+        // 当是异步任务时，则会先执行指定回调如 then、catch
+        // reslove("同步")
+        setTimeout(() => reject("异步"), 1000)
+      }).then(
+        (resolve) => {
+          console.log("res", resolve)
+        },
+        (reject) => {
+          console.log("2112")
+          console.log("reject", reject)
+        }
+      )
+    </script>
+  </body>
+</html>

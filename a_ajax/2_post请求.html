@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>post request</title>
+    <style>
+      #result {
+        border: 1px solid #323323;
+        width: 220px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="btn1">发送请求</button>
+    <div id="result"></div>
+
+    <script>
+      const btn = document.getElementById("btn1")
+      const res = document.getElementById("result")
+
+      btn.onclick = () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open("POST", "http://127.0.0.1:8800/server")
+        // post 请求参数写在 send
+        xhr.send({
+          name: "chon",
+          age: 21,
+        })
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              res.innerHTML = xhr.response
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

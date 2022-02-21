@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jsonp</title>
+  </head>
+
+  <body>
+    用户名：<input type="text" />
+    <p></p>
+
+    <script>
+      //  jsonp 其实就是通过html可以跨域的标签发送请求，比如script、link, 注意，jsonp只适用 get 请求
+      const input = document.getElementsByTagName("input")
+      const p = document.getElementsByTagName("p")
+
+      input[0].onblur = () => {
+        input[0].style.border = "1px solid #f22"
+
+        // 创建 script 标签
+        const script = document.createElement("script")
+        // 设置标签 src 请求路径
+        script.src = "http://127.0.0.1:8800/jsonp-server"
+        // 把 script 标签插入到全局
+        document.body.appendChild(script)
+      }
+
+      function handle(data) {
+        console.log(data)
+        p[0].innerHTML = data.msg
+      }
+    </script>
+  </body>
+</html>

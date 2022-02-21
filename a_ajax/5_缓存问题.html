@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>set header</title>
+    <style>
+      #result {
+        border: 1px solid #323323;
+        width: 220px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="btn1">发送请求</button>
+    <div id="result"></div>
+
+    <script>
+      const btn = document.getElementById("btn1")
+      const res = document.getElementById("result")
+
+      btn.onclick = function () {
+        // 创建AJAX 对象
+        const xhr = new XMLHttpRequest()
+        // 初始化，设置请求方法和url，后面加上请求当前时间即可刷新缓存问题
+        xhr.open("GET", "http://127.0.0.1:8800/server?time=" + Date.now())
+        // 发送
+        xhr.send()
+        xhr.onreadystatechange = function () {
+          console.log("xhr = ", xhr)
+          // 判断只有当返回了所有结果才处理
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log("请求成功！！！")
+              res.innerHTML = xhr.response
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

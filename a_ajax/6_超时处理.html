@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>set header</title>
+    <style>
+      #result {
+        border: 1px solid #323323;
+        width: 220px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="btn1">发送请求</button>
+    <div id="result"></div>
+
+    <script>
+      const btn = document.getElementById("btn1")
+      const res = document.getElementById("result")
+
+      btn.onclick = function () {
+        // 创建AJAX 对象
+        const xhr = new XMLHttpRequest()
+        // 设置请求响应时间，超出则算超时执行回调
+        xhr.timeout = 2000
+        // 超时回调
+        xhr.ontimeout = () => {
+          alert("响应超时了= =")
+        }
+        // 网络异常回调
+        xhr.onerror = () => {
+          alert("你的网络开小差了= =")
+        }
+        // 手动调用可取消请求
+        // xhr.abort()
+        // 初始化，设置请求方法和url
+        xhr.open("GET", "http://127.0.0.1:8800/delay")
+        // 发送
+        xhr.send()
+        xhr.onreadystatechange = function () {
+          console.log("xhr = ", xhr)
+          // 判断只有当返回了所有结果才处理
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log("请求成功！！！")
+              res.innerHTML = xhr.response
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

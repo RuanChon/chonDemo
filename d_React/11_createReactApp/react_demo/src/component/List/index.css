@@ -1,0 +1,9 @@
+.todo-main {
+  margin-left: 0px;
+  padding: 0;
+}
+
+.todo-empty {
+  height: 40px;
+  line-height: 40px;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 创建一个Person类
+      class Person {
+        constructor(name, age) {
+          // 构造器中的 this 指向类的实例对象
+          this.name = name
+          this.age = age
+        }
+
+        speak() {
+          // speak方法在原型里，供实例使用
+          console.log(`我叫${this.name}`, this)
+        }
+      }
+
+      // 继承
+      class Student extends Person {
+        constructor(name, age, grade) {
+          // 只要子类有构造器就必须用super去调用父类构造器再写自己专有属性
+          super(name, age)
+          this.grade = grade
+        }
+      }
+
+      // ES7 在类中如果有固定属性值，可省略构造器写法
+      class Car {
+        name = "chon"
+      }
+
+      const c = new Car()
+      console.log(c)
+    </script>
+  </body>
+</html>

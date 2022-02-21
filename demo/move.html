@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .container {
+        width: 100px;
+        height: 100px;
+        background-color: #322321;
+        position: absolute;
+        top: 50px;
+        left: 5px;
+      }
+      .container2 {
+        width: 1px;
+        height: 200px;
+        background-color: #322321;
+        position: absolute;
+        top: 50px;
+        left: 500px;
+      }
+      .container3 {
+        width: 1px;
+        height: 200px;
+        background-color: #322321;
+        position: absolute;
+        top: 50px;
+        left: 300px;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        console.log("一开始就初始化")
+      }
+
+      function startMove(val) {
+        var timer = null
+        let oDiv = document.getElementById("box1")
+        clearTimeout(timer)
+
+        timer = setInterval(() => {
+          // 缓冲移动
+          // let speed = (500 - oDiv.offsetLeft) / 40
+          let speed = 10
+
+          if (oDiv.offsetLeft < val) {
+            speed = 10
+          } else {
+            speed = -10
+          }
+
+          if (Math.abs(val - oDiv.offsetLeft) <= speed) {
+            oDiv.style.left = val + "px"
+            clearTimeout(timer)
+          } else {
+            oDiv.style.left = oDiv.offsetLeft + speed + "px"
+          }
+          document.title = oDiv.offsetLeft
+        }, 10)
+      }
+    </script>
+  </head>
+
+  <body>
+    <button onclick="startMove(500)">点击500</button>
+    <button onclick="startMove(300)">点击300</button>
+    <div class="container" id="box1"></div>
+    <div class="container2"></div>
+    <div class="container3"></div>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>抽奖</title>
+    <style>
+      .container {
+        margin: 200px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn {
+        width: 100px;
+        line-height: 30px;
+        background-color: #10a8fa;
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      点击下方按钮进行抽奖
+      <div class="btn" id="btn">开始抽奖</div>
+    </div>
+
+    <script>
+      // 生成随机数
+      function rend(m, n) {
+        return Math.ceil(Math.random() * (n - m + 1)) + m - 1
+      }
+
+      // 点击抽奖
+      const btn = document.getElementById("btn")
+      btn.onclick = () => {
+        const n = this.rend(1, 100)
+
+        // promise
+        let p = new Promise((response, reject) => {
+          if (n < 10) response(n)
+          reject(n)
+        })
+
+        p.then(
+          (res) => {
+            alert("恭喜你抽中5元保时捷现金券" + res)
+          },
+          (err) => {
+            alert("再接再厉" + err)
+          }
+        )
+      }
+    </script>
+  </body>
+</html>

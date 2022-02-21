@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+
+    <script src="https://cdn.staticfile.org/react/16.8.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.8.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      // 1.创建类式组件
+      class Weather extends React.Component {
+        showData = () => {
+          alert(this.input1.value)
+        }
+
+        myRef = dom => {
+          console.log("dom=>", dom)
+          this.input1 = dom
+        }
+
+        render() {
+          return (
+            <div>
+              <input ref={this.myRef} type="text" placeholder="" />
+              <button onClick={this.showData} type="button">
+                点击弹出
+              </button>
+            </div>
+          )
+        }
+      }
+
+      // 2.渲染到页面
+      ReactDOM.render(<Weather />, document.getElementById("test"))
+    </script>
+  </body>
+</html>
