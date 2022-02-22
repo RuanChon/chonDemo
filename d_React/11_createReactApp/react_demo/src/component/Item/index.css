@@ -4,7 +4,7 @@ li {
   line-height: 36px;
   padding: 0 5px;
   color: #333;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 li label {
@@ -21,6 +21,8 @@ li button {
   float: right;
   display: none;
   margin-top: 3px;
+  border: none;
+  border-radius: 3px;
 }
 
 li::before {

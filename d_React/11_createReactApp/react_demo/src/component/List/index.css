@@ -1,6 +1,7 @@
 .todo-main {
   margin-left: 0px;
   padding: 0;
+  border: 1px solid #ccc;
 }
 
 .todo-empty {
