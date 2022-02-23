@@ -1,0 +1,10 @@
+.todo-main {
+  margin-left: 0px;
+  padding: 0;
+  border: 1px solid #ccc;
+}
+
+.todo-empty {
+  height: 40px;
+  line-height: 40px;
+}

@@ -21,4 +21,6 @@
 .todo-footer button {
   float: right;
   margin-top: 5px;
+  border: none;
+  border-radius: 3px;
 }
