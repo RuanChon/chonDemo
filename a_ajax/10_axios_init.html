@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios 初体验</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script>
+    <style>
+      ul li {
+        list-style: none;
+        line-height: 25px;
+        margin: 10px;
+      }
+      ul li:hover {
+        cursor: pointer;
+        color: #999;
+      }
+      .axiosBox {
+        width: 15vw;
+        margin: 20vh auto 0;
+        padding: 10px;
+        background-color: #deedde;
+      }
+      #content {
+        margin-top: 40px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="axiosBox">
+      <ul>
+        <li onclick="handleClick('GET')">Get 请求</li>
+        <li onclick="handleClick('POST')">POST 请求</li>
+        <li onclick="handleClick('PUT')">PUT 请求</li>
+        <li onclick="handleClick('DELETE')">DELETE 请求</li>
+      </ul>
+      <div id="content"></div>
+    </div>
+
+    <script>
+      let keyData = []
+      let keyStr = ""
+
+      window.onload = function () {
+        document.getElementById("content").innerText = "请点击 GET 获取"
+      }
+
+      function handleClick(type) {
+        switch (type) {
+          case "GET":
+            axios({
+              method: type,
+              url: "http://localhost:3000/keyboard",
+            }).then(res => {
+              console.log("=== get ===", res.data)
+              keyData = res.data
+              let tStr = ""
+              for (let i = 0; i < keyData.length; i++) {
+                tStr = tStr + JSON.stringify(keyData[i]) + "\n"
+              }
+              keyStr = tStr
+              document.getElementById("content").innerText = keyStr
+            })
+            break
+          case "POST":
+            axios({
+              method: type,
+              url: "http://localhost:3000/keyboard",
+              data: {
+                id: keyData.length + 1,
+                name: "Aero7" + (keyData.length + 1),
+              },
+            }).then(res => {
+              console.log("=== post ===", res.data)
+              this.handleClick("GET")
+            })
+            break
+          case "PUT":
+            axios({
+              method: type,
+              url: `http://localhost:3000/keyboard/${keyData.length}`,
+              data: {
+                id: keyData.length,
+                name: "keyChron" + (keyData.length + 1),
+              },
+            }).then(res => {
+              console.log("=== put ===", res.data)
+              this.handleClick("GET")
+            })
+            break
+          case "DELETE":
+            axios({
+              method: type,
+              url: `http://localhost:3000/keyboard/${keyData.length}`,
+            }).then(res => {
+              console.log("=== delete ===", res.data)
+              this.handleClick("GET")
+            })
+            break
+          default:
+            break
+        }
+      }
+    </script>
+  </body>
+</html>
