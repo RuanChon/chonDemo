@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios 拦截器</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script>
+    <link rel="stylesheet" href="./axios.css" />
+  </head>
+  <body>
+    <div class="axiosBox">
+      <ul>
+        <li onclick="handleClick()">Get 请求</li>
+      </ul>
+      <div id="content"></div>
+    </div>
+
+    <script>
+      // 这里的 use 其实内部封装的就是一个 Promise，所以才能同时处理两个函数
+      // 设置请求拦截器
+      axios.interceptors.request.use(
+        function (config) {
+          // 发送请求前的处理逻辑代码
+          console.log("1", config)
+          return config
+        },
+        function (error) {
+          // 发送请求失败的逻辑代码
+          console.log("2")
+          return Promise.reject(error)
+        }
+      )
+
+      // 设置响应拦截器
+      axios.interceptors.response.use(
+        function (response) {
+          // 执行条件 状态码为 2xx 范围内的
+          // 处理响应成功的逻辑代码
+          console.log("3")
+          return response
+        },
+        function (error) {
+          // 执行条件 状态码非 2xx 范围的
+          // 处理响应失败的逻辑代码
+          console.log("4")
+          return Promise.reject(error)
+        }
+      )
+
+      // 发送请求
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/keyboard",
+      })
+        .then(res => {
+          console.log("请求成功", res)
+        })
+        .catch(err => {
+          console.log("请求失败", err)
+        })
+    </script>
+  </body>
+</html>

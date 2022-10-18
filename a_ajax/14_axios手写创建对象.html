@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios stop</title>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script> -->
+    <link rel="stylesheet" href="./axios.css" />
+  </head>
+  <body>
+    <div class="axiosBox">
+      <ul>
+        <li onclick="handleClick()">Get 请求</li>
+      </ul>
+      <div id="content"></div>
+    </div>
+
+    <script>
+      function Axios(config) {
+        this.defaults = config
+        this.interceptors = {
+          request: {},
+          response: {},
+        }
+      }
+
+      Axios.prototype.request = function (config) {
+        console.log("request", config)
+      }
+      Axios.prototype.get = function (config) {
+        console.log("get", config)
+      }
+
+      function createInstance(config) {
+        let context = new Axios(config)
+        let instance = Axios.prototype.request.bind(context)
+        Object.keys(Axios.prototype).forEach(key => {
+          instance[key] = Axios.prototype[key]
+        })
+        Object.keys(context).forEach(key => {
+          instance[key] = Axios.prototype[key]
+        })
+        return instance
+      }
+
+      function handleClick() {
+        let axios = createInstance()
+        // axios({
+        //   method: "GET",
+        // })
+        axios.get({
+          method: "GET",
+        })
+      }
+    </script>
+  </body>
+</html>

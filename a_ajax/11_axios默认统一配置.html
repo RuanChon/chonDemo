@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios 默认配置</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script>
+    <link rel="stylesheet" href="./axios.css" />
+  </head>
+  <body>
+    <div class="axiosBox">
+      <ul>
+        <li onclick="handleClick()">Get 请求</li>
+      </ul>
+      <div id="content"></div>
+    </div>
+
+    <script>
+      let keyData = []
+      let keyStr = ""
+      axios.defaults.method = "GET"
+      axios.defaults.baseURL = "http://localhost:3000"
+      // axios.defaults.params = { name: "chon" }
+
+      window.onload = function () {
+        document.getElementById("content").innerText = "请点击 GET 获取"
+      }
+
+      function handleClick() {
+        axios({
+          url: "/keyboard",
+        }).then(res => {
+          console.log("=== get ===", res)
+          keyData = res.data
+          let tStr = ""
+          for (let i = 0; i < keyData.length; i++) {
+            tStr = tStr + JSON.stringify(keyData[i]) + "\n"
+          }
+          keyStr = tStr
+          document.getElementById("content").innerText = keyStr
+        })
+      }
+    </script>
+  </body>
+</html>

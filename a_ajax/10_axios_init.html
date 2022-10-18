@@ -6,27 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>axios 初体验</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script>
-    <style>
-      ul li {
-        list-style: none;
-        line-height: 25px;
-        margin: 10px;
-      }
-      ul li:hover {
-        cursor: pointer;
-        color: #999;
-      }
-      .axiosBox {
-        width: 15vw;
-        margin: 20vh auto 0;
-        padding: 10px;
-        background-color: #deedde;
-      }
-      #content {
-        margin-top: 40px;
-        color: #333;
-      }
-    </style>
+    <link rel="stylesheet" href="./axios.css" />
   </head>
   <body>
     <div class="axiosBox">
@@ -54,7 +34,7 @@
               method: type,
               url: "http://localhost:3000/keyboard",
             }).then(res => {
-              console.log("=== get ===", res.data)
+              console.log("=== get ===", res)
               keyData = res.data
               let tStr = ""
               for (let i = 0; i < keyData.length; i++) {
@@ -74,7 +54,7 @@
               },
             }).then(res => {
               console.log("=== post ===", res.data)
-              this.handleClick("GET")
+              handleClick("GET")
             })
             break
           case "PUT":
@@ -87,7 +67,7 @@
               },
             }).then(res => {
               console.log("=== put ===", res.data)
-              this.handleClick("GET")
+              handleClick("GET")
             })
             break
           case "DELETE":
@@ -96,7 +76,7 @@
               url: `http://localhost:3000/keyboard/${keyData.length}`,
             }).then(res => {
               console.log("=== delete ===", res.data)
-              this.handleClick("GET")
+              handleClick("GET")
             })
             break
           default:
