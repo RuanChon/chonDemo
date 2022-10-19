@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios stop</title>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script> -->
+    <link rel="stylesheet" href="./axios.css" />
+  </head>
+  <body>
+    <div class="axiosBox">
+      <ul>
+        <li onclick="handleClick()">Get 请求</li>
+        <li onclick="stopClick()">Stop 请求</li>
+      </ul>
+      <div id="content"></div>
+    </div>
+
+    <script>
+      function Axios(config) {
+        this.defaults = config
+        this.interceptors = {
+          request: new InterceptorManager(),
+          response: new InterceptorManager(),
+        }
+      }
+
+      Axios.prototype.request = function (config) {
+        console.log("走的 request 函数", config)
+        let promise = Promise.resolve(config)
+        let chains = [dispatchRequest, undefined]
+
+        // 处理请求拦截器，如果有，就遍历到执行数组前面
+        this.interceptors.request.handlers.forEach(item => {
+          chains.unshift(item.fulfilled, item.rejected)
+        })
+        // 处理响应拦截器，如果有，就遍历到执行数组后面
+        this.interceptors.response.handlers.forEach(item => {
+          chains.push(item.fulfilled, item.rejected)
+        })
+        console.log("chinas", chains)
+        // 循环删除数组中第一个元素，并返回该元素的值。此方法更改数组的长度
+        while (chains.length > 0) {
+          promise = promise.then(chains.shift(), chains.shift())
+        }
+
+        return promise
+      }
+
+      Axios.prototype.get = function (config) {
+        console.log("get", config)
+      }
+
+      // 拦截器的管理构造函数
+      function InterceptorManager() {
+        this.handlers = []
+      }
+
+      InterceptorManager.prototype.use = function (fulfilled, rejected) {
+        this.handlers.push({
+          fulfilled,
+          rejected,
+        })
+      }
+
+      // CancelToken 构造函数
+      function CancelToken(executor) {
+        // 声明一个变量
+        var resolvePromise
+        // 为实例对象添加 promise 属性，且还是 pending 状态
+        this.promise = new Promise(resolve => {
+          // 将 resolve 赋值给 resolvePromise
+          // 赋值后只要调用 resolvePromise 就会改变 promise 状态
+          resolvePromise = resolve
+        })
+        // 调用参数 executor 函数
+        executor(function () {
+          // 只做一个操作，调用 resolvePromise
+          resolvePromise()
+        })
+      }
+
+      // 创建 axios 对象
+      function createInstance(config) {
+        let context = new Axios(config)
+        let instance = Axios.prototype.request.bind(context)
+        Object.keys(Axios.prototype).forEach(key => {
+          instance[key] = Axios.prototype[key]
+        })
+        Object.keys(context).forEach(key => {
+          instance[key] = context[key]
+        })
+        return instance
+      }
+
+      // 适配器选择，这里只触发 xhr适配器
+      function dispatchRequest(config) {
+        return xhrAdapter(config).then(
+          response => {
+            return response
+          },
+          reject => {
+            throw reject
+          }
+        )
+      }
+
+      // xhr适配器，功能就是发送xhr请求
+      function xhrAdapter(config) {
+        return new Promise((resolve, reject) => {
+          let xhr = new XMLHttpRequest()
+          xhr.open(config.method, config.url)
+          xhr.send()
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                resolve({
+                  config: config,
+                  data: xhr.response,
+                  headers: xhr.getAllResponseHeaders(),
+                  request: xhr,
+                  status: xhr.status,
+                  statusText: xhr.statusText,
+                })
+              } else {
+                reject(new Error("请求失败，状态码为" + xhr.status))
+              }
+            }
+          }
+          // 对于取消请求的处理
+          if (config.cancelToken) {
+            // 对 cancelToken 构造函数里的 promise 对象指定成功回调
+            config.cancelToken.promise.then(resolve => {
+              xhr.abort()
+            })
+          }
+        })
+      }
+
+      // 自定义事件
+      let stopCancel = null
+
+      function handleClick() {
+        let axios = createInstance({})
+        // 设置请求拦截器
+        axios.interceptors.request.use(
+          function one1(config) {
+            // 发送请求前的处理逻辑代码
+            console.log("请求拦截器1", config)
+            return config
+          },
+          function one2(error) {
+            // 发送请求失败的逻辑代码
+            console.log("请求拦截器2")
+            return Promise.reject(error)
+          }
+        )
+        // 设置响应拦截器
+        axios.interceptors.response.use(
+          function (response) {
+            // 执行条件 状态码为 2xx 范围内的
+            // 处理响应成功的逻辑代码
+            console.log("响应拦截器1")
+            return response
+          },
+          function (error) {
+            // 执行条件 状态码非 2xx 范围的
+            // 处理响应失败的逻辑代码
+            console.log("响应拦截器2")
+            return Promise.reject(error)
+          }
+        )
+
+        axios({
+          method: "GET",
+          url: "http://localhost:3000/keyboard",
+          cancelToken: new CancelToken(function (cancel) {
+            // 此时 stopCancel 就是 function() resolvePromise() }
+            // 调用 stopCancel() 就是调用 resolvePromise()
+            // 只要一调用就触发了 CancelToken 构造函数里 promise 属性的状态执行 abort()
+            stopCancel = cancel
+          }),
+        }).then(res => {
+          console.log("手写结果", res)
+        })
+      }
+
+      function stopClick() {
+        console.log("1")
+        stopCancel()
+        console.log("2")
+      }
+    </script>
+  </body>
+</html>
