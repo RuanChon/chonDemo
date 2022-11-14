@@ -4,7 +4,6 @@
  * @Description: 文件说明
  */
 import { createApp } from "vue"
-import "./style.css"
 import router from "./router"
 import App from "./App.vue"
 
