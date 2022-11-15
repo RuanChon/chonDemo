@@ -20,6 +20,13 @@ const routes: Array<RouteRecordRaw> = [
     path: "/Detail",
     name: "Detail",
     component: () => import("../components/Detail.vue"),
+    children: [
+      {
+        path: "/Detail/Color",
+        name: "Color",
+        component: () => import("../components/Color.vue"),
+      },
+    ],
   },
 ]
 
