@@ -21,7 +21,6 @@ const route = useRoute()
 const router = useRouter()
 
 function toColor() {
-  const list = route.query
   router.push({
     name: "Color",
     params: {
