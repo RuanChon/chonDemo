@@ -7,27 +7,46 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { createVNode, render } from "vue"
 import LoadingBar from "@/components/loadingBar.vue"
 
+// 解决读取meta时的类型报错
+declare module "vue-router" {
+  interface RouteMeta {
+    title: string
+  }
+}
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     alias: ["/index"],
     name: "Index",
     component: () => import("@/pages/index.vue"),
+    meta: {
+      title: "首页",
+    },
   },
   {
     path: "/mass",
     name: "Mass",
     component: () => import("@/components/Mass.vue"),
+    meta: {
+      title: "量产键盘",
+    },
   },
   {
     path: "/custom",
     name: "Custom",
     component: () => import("../components/Custom.vue"),
+    meta: {
+      title: "客制化键盘",
+    },
   },
   {
     path: "/detail",
     name: "Detail",
     component: () => import("../components/Detail.vue"),
+    meta: {
+      title: "键盘详情",
+    },
     children: [
       {
         path: "/detail/color",
@@ -40,6 +59,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: () => import("@/pages/login.vue"),
+    meta: {
+      title: "登录",
+    },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -63,6 +85,7 @@ render(LoadingVNode, document.body)
 
 // 路由前置守卫
 router.beforeEach((to, form, next) => {
+  document.title = to.meta.title
   LoadingVNode.component?.exposed?.startLoading()
   if (whileList.includes(to.path) || localStorage.getItem("token")) {
     console.log("to=", to)
