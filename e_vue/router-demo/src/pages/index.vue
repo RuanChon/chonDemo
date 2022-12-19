@@ -4,7 +4,7 @@
  * @Description: 文件说明
 -->
 <template>
-  <div>这里是键盘首页</div>
+  <div>这里是键盘首页 index</div>
   <button hover-class="button-hover" @click="toLink('mass')">量产</button>
   <button hover-class="button-hover" @click="toLink('custom')">客制化</button>
   <div class="colorDiv">
