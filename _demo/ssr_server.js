@@ -4,28 +4,37 @@
  * @Description: 文件说明
  */
 const server = require("express")()
+const fs = require("fs")
 const Vue = require("vue")
-const renderer = require("vue-server-renderer").createRenderer()
+const vueRenderer = require("vue-server-renderer")
 
 server.get("/ssr", (req, res) => {
   const app = new Vue({
     template: `<div>hello SSR, link: ${req.url}</div>`,
   })
 
-  renderer.renderToString(app, (err, html) => {
+  const ssrTemplate = fs.readFileSync("./ssr_template.html", "utf-8")
+
+  const renderer = vueRenderer.createRenderer({
+    ssrTemplate,
+  })
+
+  // 自定义上下文
+  const context = {
+    title: "vue ssr",
+    metes: `
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    `,
+  }
+
+  renderer.renderToString(app, context, (err, html) => {
     if (err) {
       res.status(500).end("Internal Server Error")
       return
     }
-    res.json({
-      code: 200,
-      msg: "success",
-      data: {
-        name: "Chon",
-        age: 25,
-        boby: html,
-      },
-    })
+    console.log(context.title)
+    res.end(html)
   })
 })
 
