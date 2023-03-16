@@ -1,3 +1,5 @@
+// 代码雨
+
 let canvas: HTMLCanvasElement = document.querySelector("#rainCanvas") as HTMLCanvasElement
 let ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D
 canvas.width = screen.availWidth
