@@ -1,0 +1,11 @@
+{
+  "name": "6_codeloader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "loader-utils": "^3.2.1",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1"
+  }
+}
