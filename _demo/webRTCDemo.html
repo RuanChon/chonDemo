@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>webrtc demo</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .container {
+        position: relative;
+        width: 680px;
+        height: 600px;
+      }
+      .shareVideo {
+        width: 680px;
+        height: 600px;
+      }
+      .localVideo {
+        position: absolute;
+        bottom: 100px;
+        right: 0;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <video class="shareVideo" id="shareVideo" autoplay playsinline muted></video>
+      <video class="localVideo" id="localVideo" autoplay playsinline muted></video>
+    </div>
+    <button onclick="handlePhoto()">拍照</button>
+    <img id="localPhoto" style="width: 200px; height: 150px" />
+
+    <script>
+      window.onload = function () {
+        getStream()
+      }
+      // 获取本地音视频流
+      async function getStream() {
+        // 获取媒体流
+        const localStream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: {
+            width: 680,
+            height: 600,
+          },
+        })
+        // 获取屏幕共享的媒体流
+        const shareStream = await navigator.mediaDevices.getDisplayMedia({
+          audio: true,
+          video: true,
+        })
+        // 将媒体流设置到 video 标签上播放
+        playLocalStream(localStream)
+        playShareStream(shareStream)
+      }
+
+      // 播放本地视频流
+      function playLocalStream(stream) {
+        const videoEl = document.getElementById("localVideo")
+        videoEl.srcObject = stream
+      }
+
+      // 播放共享视频流
+      function playShareStream(stream) {
+        const videoEl = document.getElementById("shareVideo")
+        videoEl.srcObject = stream
+      }
+
+      // 拍照
+      function handlePhoto() {
+        const videoEl = document.getElementById("localVideo")
+        const photoEl = document.getElementById("localPhoto")
+        const canvas = document.createElement("canvas")
+        canvas.width = videoEl.videoWidth
+        canvas.height = videoEl.videoHeight
+        const ctx = canvas.getContext("2d")
+        ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height)
+        // 转 base64
+        console.log("🚀🚀🚀 / img", canvas.toDataURL("image/png"))
+        photoEl.src = canvas.toDataURL("image/png")
+      }
+    </script>
+  </body>
+</html>
