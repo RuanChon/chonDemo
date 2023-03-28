@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("console.log(\"hello options.name\")\n\n\n//# sourceURL=webpack://6_codeloader/./src/index.js?");
+eval("console.log(\"hello undefined\")\n\n\n//# sourceURL=webpack://6_codeloader/./src/index.js?");
 
 /***/ })
 

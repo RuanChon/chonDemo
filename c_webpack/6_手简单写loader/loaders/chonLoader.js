@@ -6,8 +6,8 @@ const loaderUtils = require("loader-utils")
 module.exports = function (source) {
   //getOptions会自动地帮我们分析this.query,然后把参数的所有内容放在options里面去
   const options = loaderUtils.urlToRequest(this)
-  console.log("options", options.name)
-  const result = source.replace("chon", "options.name")
+  console.log("options", options)
+  const result = source.replace("chon", options.name)
 
   this.callback(null, result)
 }
