@@ -1,0 +1,2 @@
+(self.webpackChunk_0_webpackTest=self.webpackChunk_0_webpackTest||[]).push([[185],{595:function(e){e.exports=function(e,n){return setTimeout((()=>{console.log("我太帅咯")}),1e3),e+n}}}]);
+//# sourceMappingURL=Math.chunk.48f2c.js.map

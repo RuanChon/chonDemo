@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_0_webpackTest=self.webpackChunk_0_webpackTest||[]).push([[179],{128:function(e,n,t){document.body.appendChild(function(){const e=document.createElement("div");return e.innerHTML=_.join(["Hello","webpack"]," "),e}()),document.getElementById("btn").onclick=function(){t.e(185).then(t.t.bind(t,595,23)).then((e=>{console.log(e.default(1,2))}))}}},function(e){var n;n=128,e(e.s=n)}]);
+//# sourceMappingURL=main.0544b.js.map

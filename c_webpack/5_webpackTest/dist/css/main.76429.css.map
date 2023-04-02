@@ -1,0 +1,1 @@
+{"version":3,"file":"css/main.76429.css","mappings":"AAEA,KACE,qBADF","sources":["webpack://0_webpackTest/./src/index.less"],"sourcesContent":["@themeColor: #8d8;\n\nbody {\n  background-color: @themeColor;\n}\n"],"names":[],"sourceRoot":""}
