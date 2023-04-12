@@ -9,6 +9,7 @@
   "author": "chon",
   "license": "ISC",
   "dependencies": {
+    "create-react-app": "^5.0.1",
     "express": "^4.17.2",
     "jquery": "^3.6.0"
   },
