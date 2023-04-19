@@ -1,8 +1,4 @@
-import { useEffect } from "react"
-
 export default function ListItem(props) {
-  console.log("props", props)
-
   return (
     <div>
       <ul>
