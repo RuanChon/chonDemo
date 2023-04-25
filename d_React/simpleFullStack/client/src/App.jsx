@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from "react"
 import ThemeValue from "./context/ThemeContext"
 import TabView from "./components/TabView"
 import TransitonCase from "./components/TransitionCase"
+import Count from "./components/Count"
 
 function App() {
   const testRef = useRef(null)
@@ -21,7 +22,8 @@ function App() {
         {/* <FowardRef a={2} ref={testRef} />
         <button onClick={handleInput}>focuss</button> */}
         {/* <TabView /> */}
-        <TransitonCase />
+        {/* <TransitonCase /> */}
+        <Count />
       </ThemeValue.Provider>
     </div>
   )

@@ -3,8 +3,16 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(
-  <div>
-    <App />
-  </div>
-)
+
+function render() {
+  console.log("重新渲染")
+  root.render(
+    <div>
+      <App />
+    </div>
+  )
+}
+
+window.render = render
+
+render()
