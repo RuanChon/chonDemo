@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="list"></ul>
+    <input id="inputA" placeholder="" />
+    <button id="btnA">发送</button>
+    <button id="btnB">断开链接</button>
+    <script>
+      // 创建链接
+      const ws = new WebSocket("ws://localhost:8080")
+
+      // 链接成功钩子 监听 open 事件
+      ws.addEventListener("open", function (event) {
+        console.log("已经链接到服务端")
+      })
+
+      // 发送消息 ws.send(value)
+      const btnA = document.getElementById("btnA")
+      btnA.addEventListener("click", () => {
+        console.log("click")
+        const input = document.getElementById("inputA")
+        const value = input.value
+        ws.send(value)
+        input.value = ""
+      })
+
+      // 接收处理消息 监听 message 事件
+      let list = document.getElementById("list")
+
+      ws.addEventListener("message", function (event) {
+        console.log("来自服务端消息:", JSON.parse(event.data))
+        let res = JSON.parse(event.data)
+        let li = document.createElement("li")
+        if (res.type === 2) {
+          li.innerText = res.data
+          list.appendChild(li)
+        }
+      })
+
+      // 断开链接 ws.close()
+      const btnB = document.getElementById("btnB")
+      btnB.addEventListener("click", () => {
+        ws.close()
+      })
+    </script>
+  </body>
+</html>
