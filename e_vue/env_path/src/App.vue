@@ -16,7 +16,7 @@ import { onMounted } from "vue"
 onMounted(() => {
   console.log(import.meta.env)
 
-  fetch("/user")
+  // fetch("/user")
 })
 </script>
 
