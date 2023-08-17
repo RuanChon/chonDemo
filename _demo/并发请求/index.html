@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>并发请求</title>
+  </head>
+
+  <body>
+    <div>
+      <button id="btn">点击</button>
+    </div>
+    <script>
+      const btn = document.getElementById("btn")
+
+      btn.addEventListener("click", () => {
+        console.log("212")
+        let urlList = []
+        for (let i = 0; i < 10; i++) {
+          urlList.push(`https://api.apiopen.top/getJoke?type=text&page=${i}`)
+        }
+        getRequest(urlList, 3).then(res => {
+          console.log("res", res)
+          return res
+        })
+      })
+
+      // 并发请求
+      function getRequest(urlList, maxNum) {
+        return new Promise(resolve => {
+          if (urlList.length === 0) {
+            resolve([])
+            return
+          }
+
+          let idx = 0 // 当前请求的索引
+          let nextCurrent = 0 // 下一个请求下标
+          let count = 0 // 当前请求完成的数量
+          const requestResult = [] // 请求结果
+
+          // 处理请求
+          async function request() {
+            //控制长度溢出
+            if (nextCurrent === urlList.length) return
+            idx = nextCurrent
+            const url = urlList[idx]
+            nextCurrent++
+
+            try {
+              const res = await fetch(url, { method: "GET" })
+              requestResult[idx] = res
+            } catch (error) {
+              requestResult[idx] = error
+            } finally {
+              count++
+              if (count === urlList.length) {
+                console.log("over")
+                resolve(requestResult)
+              }
+              request()
+            }
+            console.log("当前请求结构", requestResult, "当前完成的第几个请求", idx, "下一个请求", nextCurrent)
+          }
+
+          // 处理并发和数组长度冲突，取最小值，保证只有在数组长度大于并发数
+          const forNum = Math.min(maxNum, urlList.length)
+          for (let i = 0; i < forNum; i++) {
+            request()
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
