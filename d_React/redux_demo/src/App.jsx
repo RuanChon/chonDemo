@@ -7,7 +7,7 @@ function App() {
   console.log('当前 store：', res)
 
   const handleClick = useCallback(() => {
-    store.dispatch({ type: 'SET_USER_INFO', time: '112231231231' })
+    store.dispatch({ type: 'async_userInfo', time: '112231231231' })
   }, [])
 
   return (

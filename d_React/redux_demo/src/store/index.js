@@ -1,5 +1,5 @@
-import { legacy_createStore, applyMiddleware } from "redux"
-import { reducer } from "./reducers"
+import { legacy_createStore, applyMiddleware } from 'redux'
+import { reducer } from './reducers'
 
 // 简版 redux-thunk 的源码
 const thunkMiddleware = config => store => next => action => {
@@ -23,9 +23,12 @@ export const store = legacy_createStore(
     thunkMiddleware({
       async_increment: dispatch => {
         setTimeout(() => {
-          console.log("数据dispatch来了", dispatch)
-          dispatch({ type: "INCREMENT" })
+          console.log('数据dispatch来了', dispatch)
+          dispatch({ type: 'INCREMENT' })
         }, 2000)
+      },
+      async_userInfo: dispatch => {
+        console.log('userInfo-中间件', dispatch)
       },
     })
   )
