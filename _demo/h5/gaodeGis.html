@@ -44,23 +44,23 @@
     <div id="container"></div>
     <div id="panel"></div>
     <script type="text/javascript">
-      var map = new AMap.Map("container", {
+      var map = new AMap.Map('container', {
         resizeEnable: true,
         center: [114.05501, 22.55948], //地图中心点
-        zoom: 14, //地图显示的缩放级别
+        zoom: 15, //地图显示的缩放级别
       })
       //步行导航
       var walking = new AMap.Walking({
         map: map,
-        panel: "panel",
+        panel: 'panel',
       })
       //根据起终点坐标规划步行路线
       walking.search([114.0505, 22.55937], [114.07363, 22.56186], function (status, result) {
         // result即是对应的步行路线数据信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_WalkingResult
-        if (status === "complete") {
-          log.success("绘制步行路线完成")
+        if (status === 'complete') {
+          log.success('绘制步行路线完成')
         } else {
-          log.error("步行路线数据查询失败" + result)
+          log.error('步行路线数据查询失败' + result)
         }
       })
     </script>
