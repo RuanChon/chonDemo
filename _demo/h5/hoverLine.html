@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        margin: 100px auto;
+        width: 300px;
+        font-size: 20px;
+        line-height: 40px;
+      }
+      span {
+        cursor: pointer;
+        background: linear-gradient(to right, #ff416c, #ff4b2b) no-repeat right bottom;
+        background-size: 0 2px;
+        transition: background-size 1s;
+      }
+      span:hover {
+        background-position-x: left;
+        background-size: 100% 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <span
+        >Ruan Chon -- 删除对象的 property。如果对象是响应式的，确保删除能触发更新视图。这个方法主要用于避开 Vue
+        不能检测到 property 被删除的限制，但是你应该很少会使用它。</span
+      >
+    </div>
+  </body>
+</html>
